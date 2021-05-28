@@ -1,0 +1,32 @@
+{
+    "name": "zaupita/laravel-google-calendar",
+    "description": "Laravel wrapper for Google Calendar API that utilizes the Google Client API.",
+    "keywords": [
+        "google",
+        "calendar",
+        "api",
+        "laravel"
+    ],
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "hackerESQ\\GoogleCalendar\\": "src/"
+        }
+    },
+    "require": {
+        "php" : ">=7.0",
+        "laravel/framework": "~6.2.0",
+        "google/apiclient": "^2.2"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "zaupita\\GoogleCalendar\\GoogleCalendarServiceProvider"
+            ],
+            "aliases": {
+                "GoogleCalendar": "zaupita\\GoogleCalendar\\Facades\\GoogleCalendar"
+            }
+        }
+    }
+}

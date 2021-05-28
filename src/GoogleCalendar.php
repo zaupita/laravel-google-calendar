@@ -1,6 +1,6 @@
 <?php
  
-namespace hackerESQ\GoogleCalendar;
+namespace zaupita\GoogleCalendar;
  
 use Google_Client;
 use Google_Service_Calendar;

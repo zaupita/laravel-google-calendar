@@ -16,7 +16,7 @@ This package can be used in Laravel 5.4 or higher.
 You can install the package via composer:
 
 ``` bash
-composer require hackeresq/laravel-google-calendar
+composer require zaupita/laravel-google-calendar
 ```
 
 In Laravel 5.5+ the service provider and alias will automatically get registered and you can skip this step. In older versions of the framework just add the service provider and alias in `config/app.php` file:
@@ -35,13 +35,13 @@ In Laravel 5.5+ the service provider and alias will automatically get registered
 ];
 ```
 
-You can now publish [the migration](https://github.com/hackerESQ/laravel-google-calendar/blob/master/database/migrations/update_users_table.php) and [config](https://github.com/hackerESQ/laravel-google-calendar/blob/master/config/google_calendar.php) files and migrate updates to the user table with:
+You can now publish [the migration](https://github.com/zaupita/laravel-google-calendar/blob/master/database/migrations/update_users_table.php) and [config](https://github.com/zaupita/laravel-google-calendar/blob/master/config/google_calendar.php) files and migrate updates to the user table with:
 
 ```bash
-php artisan vendor:publish --provider="hackerESQ\GoogleCalendar\GoogleCalendarServiceProvider" && php artisan migrate
+php artisan vendor:publish --provider="zaupita\GoogleCalendar\GoogleCalendarServiceProvider" && php artisan migrate
 ```
 
-<small>Note: If you are using a database that does not use the JSON field-type (e.g. older versions of MariaDB), you may get a database error while trying to run your migration. In that case, you will need to change the 'google_access_token' column to 'LONGTEXT' in the '[update_users_table.php](https://github.com/hackerESQ/laravel-google-calendar/blob/master/database/migrations/update_users_table.php)' migration file (published by the above command). Then, re-run your migration using `php artisan migrate`. </small>
+<small>Note: If you are using a database that does not use the JSON field-type (e.g. older versions of MariaDB), you may get a database error while trying to run your migration. In that case, you will need to change the 'google_access_token' column to 'LONGTEXT' in the '[update_users_table.php](https://github.com/zaupita/laravel-google-calendar/blob/master/database/migrations/update_users_table.php)' migration file (published by the above command). Then, re-run your migration using `php artisan migrate`. </small>
 
 <b>Success!</b> laravel-google-calendar is now installed!
 
@@ -117,11 +117,11 @@ This package comes with a Controller that can be used (or you can create your ow
 ```php
 // Google Calendar API routes
 Route::group([ 'prefix'=>'api/google' ], function () {
-	Route::get('calendars', '\hackerESQ\GoogleCalendar\Controllers\GoogleCalendarController@listCalendars');
-	Route::get('events', '\hackerESQ\GoogleCalendar\Controllers\GoogleCalendarController@listEvents');
-	Route::put('events/{id}', '\hackerESQ\GoogleCalendar\Controllers\GoogleCalendarController@updateEvent');
-	Route::post('events', '\hackerESQ\GoogleCalendar\Controllers\GoogleCalendarController@createEvent');
-	Route::delete('events/{id}', '\hackerESQ\GoogleCalendar\Controllers\GoogleCalendarController@deleteEvent');
+	Route::get('calendars', '\zaupita\GoogleCalendar\Controllers\GoogleCalendarController@listCalendars');
+	Route::get('events', '\zaupita\GoogleCalendar\Controllers\GoogleCalendarController@listEvents');
+	Route::put('events/{id}', '\zaupita\GoogleCalendar\Controllers\GoogleCalendarController@updateEvent');
+	Route::post('events', '\zaupita\GoogleCalendar\Controllers\GoogleCalendarController@createEvent');
+	Route::delete('events/{id}', '\zaupita\GoogleCalendar\Controllers\GoogleCalendarController@deleteEvent');
 
 });
 ```

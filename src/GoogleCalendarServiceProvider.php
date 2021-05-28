@@ -70,7 +70,7 @@ class GoogleCalendarServiceProvider extends ServiceProvider {
 	public function register () {
 
 
-		$this->app->singleton('GoogleCalendar','hackerESQ\GoogleCalendar\GoogleCalendar'); 
+		$this->app->singleton('GoogleCalendar','zaupita\GoogleCalendar\GoogleCalendar'); 
 
 
 

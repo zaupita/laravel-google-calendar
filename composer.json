@@ -16,7 +16,7 @@
     },
     "require": {
         "php" : ">=7.0",
-        "laravel/framework": "~6.2.0",
+        "laravel/framework": "~6.20.27",
         "google/apiclient": "^2.2"
     },
     "extra": {

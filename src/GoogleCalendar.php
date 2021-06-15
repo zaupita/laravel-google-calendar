@@ -39,7 +39,7 @@ class GoogleCalendar
         }
 
         if ($this->checkToken($accessToken)) {
-            return ["google_access_token" => $accessToken];
+            return true;
         } else {
             return false;
         }

@@ -20,7 +20,7 @@ class GoogleCalendar
         $this->client->setAccessType("offline");
         $this->client->setIncludeGrantedScopes(true);
         $this->client->setApprovalPrompt('force');
-        $this->client->setRedirectUri(url('/')."/oauth2callback");
+        $this->client->setRedirectUri(config('google_calendar.url')."/oauth2callback");
     }
 
     public function getAuthUrl($redirect = NULL) {

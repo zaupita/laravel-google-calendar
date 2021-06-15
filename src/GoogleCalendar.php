@@ -164,7 +164,7 @@ class GoogleCalendar
     }
 
     public function updateEvent($request, $accessToken = NULL) {
-        !$this->isAuthed($accessToken)) ? abort(401, 'Access token required') : NULL;
+        !$this->isAuthed($accessToken) ? abort(401, 'Access token required') : NULL;
 
         $this->client->setAccessToken($accessToken);
 

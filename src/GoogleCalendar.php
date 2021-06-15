@@ -32,27 +32,14 @@ class GoogleCalendar
  
     }
 
-    public function isAuthed() {
- 
-        // Have we set the session yet? If so, great, let's use this access token!
-        if (session('google_access_token') && session()->has('google_access_token')) {
+    public function isAuthed($accessToken) {
 
-            return $this->checkToken(session("google_access_token"));
- 
-        } 
-
-        // Laravel session may have expired. Let's check the DB. Does the user have an access token in the DB?
-        if (!auth()->user()->google_connected || empty(auth()->user()->google_access_token)) {
+        if (!$accessToken) {
             return false;
         }
 
-        // Hmm, looks like they have an access token in the DB, but we don't have a session.
-        // Let's grab the access token from the DB and set the Laravel session.
-        $accessToken = auth()->user()->google_access_token;
-
         if ($this->checkToken($accessToken)) {
-            session(["google_access_token" => $accessToken]);
-            return true;
+            return ["google_access_token" => $accessToken];
         } else {
             return false;
         }
@@ -68,10 +55,7 @@ class GoogleCalendar
             
             $accessToken = $this->client->fetchAccessTokenWithRefreshToken($this->client->getRefreshToken());
 
-            session(["google_access_token" => $accessToken]);
-            $user = auth()->user();
-            $user->setAttribute('google_access_token',json_encode($accessToken));
-            $user->save();
+           return ["google_access_token" => $accessToken];
         }
 
         return $this->client->getAccessToken() ? true : false;
@@ -86,14 +70,7 @@ class GoogleCalendar
             $accessToken = $this->client->getAccessToken();
 
             // Save to session and database
-            session(['google_access_token' => $accessToken]);
-            $user = auth()->user();
-            $user->setAttribute('google_access_token',json_encode($accessToken));
-            $user->setAttribute('google_connected',true);
-            $user->save();
- 
-            return true;
-             
+            return ['google_access_token' => $accessToken];
         }
  
         return false;
@@ -104,22 +81,13 @@ class GoogleCalendar
 
         $this->client->revokeToken();
 
-        session(['google_access_token' => NULL]);
-        $user = auth()->user();
-        $user->setAttribute('google_access_token',null);
-        $user->setAttribute('google_connected',false);
-        $user->save();
-
-        return true;
+        return ['google_access_token' => NULL];
 
     }
 
     public function listCalendars($accessToken = NULL) {
 
-        // Set defaults
-        $accessToken = empty($accessToken) ? auth()->user()->google_access_token : $accessToken;
-
-        !$this->isAuthed() ? abort(401, 'Access token required') : NULL;
+        !$this->isAuthed($accessToken) ? abort(401, 'Access token required') : NULL;
 
         $this->client->setAccessToken($accessToken);
 
@@ -136,9 +104,8 @@ class GoogleCalendar
         $calendarId = empty($calendarId) ? 'primary' : $calendarId;
         $start = empty($start) ? Carbon::now()->startOfMonth() : $start;
         $end = empty($end) ? Carbon::now()->endOfMonth() : $end;
-        $accessToken = empty($accessToken) ? auth()->user()->google_access_token : $accessToken;
 
-        !$this->isAuthed() ? abort(401, 'Access token required') : NULL;
+        !$this->isAuthed($accessToken) ? abort(401, 'Access token required') : NULL;
 
         $this->client->setAccessToken($accessToken);
 
@@ -197,11 +164,7 @@ class GoogleCalendar
     }
 
     public function updateEvent($request, $accessToken = NULL) {
-
-        // Set defaults
-        $accessToken = empty($accessToken) ? auth()->user()->google_access_token : $accessToken;
-
-        !$this->isAuthed() ? abort(401, 'Access token required') : NULL;
+        !$this->isAuthed($accessToken)) ? abort(401, 'Access token required') : NULL;
 
         $this->client->setAccessToken($accessToken);
 
@@ -270,10 +233,7 @@ class GoogleCalendar
 
     public function createEvent($request, $accessToken = NULL) {
 
-        // Set defaults
-        $accessToken = empty($accessToken) ? auth()->user()->google_access_token : $accessToken;
-        
-        !$this->isAuthed() ? abort(401, 'Access token required') : NULL;
+        !$this->isAuthed($accessToken) ? abort(401, 'Access token required') : NULL;
 
         $this->client->setAccessToken($accessToken);
 
@@ -335,11 +295,7 @@ class GoogleCalendar
     }
 
     public function deleteEvent($request, $accessToken = NULL) {
-
-        // Set defaults
-        $accessToken = empty($accessToken) ? auth()->user()->google_access_token : $accessToken;
-        
-        !$this->isAuthed() ? abort(401, 'Access token required') : NULL;
+        !$this->isAuthed($accessToken) ? abort(401, 'Access token required') : NULL;
 
         $this->client->setAccessToken($accessToken);
 

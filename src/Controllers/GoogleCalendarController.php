@@ -10,9 +10,9 @@ use App\Http\Controllers\Controller;
 class GoogleCalendarController extends Controller
 {
 
-	public function listCalendars () {
+	public function listCalendars (Request $request) {
 
-		return GoogleCalendar::listCalendars(auth()->guard('api')->user()->google_access_token);
+		return GoogleCalendar::listCalendars($request->access_token);
 
 	}
 
@@ -20,7 +20,7 @@ class GoogleCalendarController extends Controller
 
 		return GoogleCalendar::listEvents(
 			$request->calendar,
-			auth()->guard('api')->user()->google_access_token,
+			$request->access_token,
 			$request->start,
 			$request->end,
 			$request->timezone
@@ -30,19 +30,19 @@ class GoogleCalendarController extends Controller
 
 	public function updateEvent (Request $request) {
 
-		return GoogleCalendar::updateEvent($request, auth()->guard('api')->user()->google_access_token);
+		return GoogleCalendar::updateEvent($request, $request->access_token);
 
 	}
 
 	public function createEvent (Request $request) {
 
-		return GoogleCalendar::createEvent($request, auth()->guard('api')->user()->google_access_token);
+		return GoogleCalendar::createEvent($request, $request->access_token);
 
 	}
 
 	public function deleteEvent (Request $request) {
 
-		return GoogleCalendar::deleteEvent($request, auth()->guard('api')->user()->google_access_token);
+		return GoogleCalendar::deleteEvent($request, $request->access_token);
 
 	}
 

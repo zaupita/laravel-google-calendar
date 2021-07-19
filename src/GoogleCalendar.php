@@ -27,6 +27,7 @@ class GoogleCalendar
          
         // Set redirect URL as state so it gets passed back with the OAuth2 callback
         !empty($redirect) ? $this->client->setState($redirect) : NULL;
+        !empty($redirect) ? $this->client->setRedirectUri($redirect) : NULL;
  
         return filter_var($this->client->createAuthUrl(), FILTER_SANITIZE_URL);
  
